@@ -1,18 +1,18 @@
+const router = require("express").Router();
 const db = require ("../models");
 
-module.exports = function(app) {
-   // come back and add route
-    app. get("/api/workouts", (req, res) => {
+
+    router. get("/api/workouts", (req, res) => {
         db.Workout.find ({})
         .then(bdWorkout => {
             res.json(dbWorkout);
         })
         .catch(err => {
-            res.json(err);
+            res.status(400).json(err);
         });
     });
     
-    app.put("/api/workouts/:id", (req, res) => {
+    router.put("/api/workouts/:id", (req, res) => {
         db.Workout.findByIdAndUpdate(
             req.params.id,
             {
@@ -26,11 +26,11 @@ module.exports = function(app) {
             res.json(dbWorkout);
         })
         .catch(err => {
-            res.json(err);
+            res.status(400).json(err);
         });
     });
 
-    app.post("/api/workouts", ({ body }, res) => {
+    router.post("/api/workouts", ({ body }, res) => {
         db.Workout.create(body)
         .then(bdWorkout => {
             res.json(dbWorkout);
@@ -39,13 +39,14 @@ module.exports = function(app) {
             res.json(dbWorkout);
         })
         .catch(err => {
-            res.json(err);
+            res.status(400).json(err);
         });
     });
-    app.get("/api/workouts/range", (req, res) => {
+    router.get("/api/workouts/range", (req, res) => {
         db.Workout.find({})
         .then(dbUser => {
             res.json(dbUser);
         });
     });
-};
+
+    module.exports = router;
