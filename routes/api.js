@@ -1,51 +1,60 @@
 const router = require("express").Router();
-const Workout = require ("../models");
+const {Workout} = require ("../models");
 
 
-    router.get("/api/workouts", (req, res) => {
-        Workout.find ({})
+    router.post("/api/workouts", (req, res) => {
+        Workout.create ({})
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
         .catch(err => {
-            res.status(400).json(err);
+            res.json(err);
         });
     });
     
-    router.put("/api/workouts/:id", (req, res) => {
+    router.put("/api/workouts/:id", ({ body, params }, res) => {
         Workout.findByIdAndUpdate(
-            req.params.id,
-            {
-                $push: {
-                    exercises: req.body
-                }
-            }
         )
 
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
         .catch(err => {
-            res.status(400).json(err);
+            res.json(err);
         });
     });
 
-    router.post("/api/workouts", ({ body }, res) => {
-        Workout.create({})
+    router.get("/api/workouts", (req, res) => {
+        Workout.aggregate([
+        ])
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
+
         .catch(err => {
-            res.status(400).json(err);
+            res.json(err);
         });
     });
     router.get("/api/workouts/range", (req, res) => {
-        Workout.find({})
-        .then(dbUser => {
-            res.json(dbUser);
+        Workout.aggregate([
+        ])
+        .then(dbWorkouts => {
+            console.log(dbWorkouts);
+            res.json(dbWorkouts);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+
+    });
+
+    router.delete("/api/workouts", ({ body }, res) => {
+        Workout.findByIdAndDelete(body.id)
+        .then(() => {
+            res.json(true);
+        })
+        .catch((err) => {
+            res.json(err);
         });
     });
 
