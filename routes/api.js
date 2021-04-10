@@ -13,7 +13,7 @@ const {Workout} = require ("../models");
     });
     
     router.put("/api/workouts/:id", ({ body, params }, res) => {
-        Workout.updateOne({_id: params.id}, {$push:{exercise:body}}
+        Workout.updateOne({_id: params.id}, {$push:{exercises:body}}
         )
 
         .then(dbWorkout => {
