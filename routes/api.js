@@ -25,8 +25,7 @@ const {Workout} = require ("../models");
     });
 
     router.get("/api/workouts", (req, res) => {
-        Workout.aggregate([
-        ])
+        Workout.find()
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
@@ -36,8 +35,7 @@ const {Workout} = require ("../models");
         });
     });
     router.get("/api/workouts/range", (req, res) => {
-        Workout.aggregate([
-        ])
+        Workout.find()
         .then(dbWorkouts => {
             console.log(dbWorkouts);
             res.json(dbWorkouts);
